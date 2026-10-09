@@ -10,8 +10,8 @@ Used by F-18 (Non-User Recipient Support) and shared with F-16
 
 from __future__ import annotations
 
-import re
 import logging
+import re
 from typing import Any
 
 from homeassistant.core import HomeAssistant
@@ -21,15 +21,15 @@ from homeassistant.util import slugify
 
 from .const import (
     DEFAULT_NAVIGATE_TO,
-    DELIVERY_FORMAT_RICH,
-    DELIVERY_FORMAT_PLAIN,
-    DELIVERY_FORMAT_TTS,
-    DELIVERY_FORMAT_PERSISTENT,
     DELIVERY_FORMAT_PATTERNS,
+    DELIVERY_FORMAT_PERSISTENT,
+    DELIVERY_FORMAT_PLAIN,
+    DELIVERY_FORMAT_RICH,
+    DELIVERY_FORMAT_TTS,
     DEVICE_TYPE_PUSH,
     DEVICE_TYPE_TTS,
-    SMART_TAG_MODE_NONE,
     SMART_TAG_MODE_CATEGORY,
+    SMART_TAG_MODE_NONE,
     SMART_TAG_MODE_TITLE,
 )
 

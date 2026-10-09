@@ -10,9 +10,9 @@ from typing import Any
 from homeassistant.core import HomeAssistant
 
 from ..const import (
+    MIGRATE_SERVICES,
     MIGRATE_SOURCE_AUTOMATION,
     MIGRATE_SOURCE_SCRIPT,
-    MIGRATE_SERVICES,
 )
 from .common import normalize_to_list, read_yaml_file, slugify
 from .duplicates import _mark_adjacent_duplicates

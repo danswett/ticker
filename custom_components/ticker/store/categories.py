@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 import logging
-from datetime import datetime, timezone
-from typing import TYPE_CHECKING, Any, Callable
+from collections.abc import Callable
+from datetime import UTC, datetime
+from typing import TYPE_CHECKING, Any
 
 from homeassistant.helpers.storage import Store
 
@@ -49,9 +50,9 @@ class CategoryMixin:
     """
 
     # Type hints for mixin attributes (provided by main class)
-    hass: "HomeAssistant"
+    hass: HomeAssistant
     _categories: dict[str, dict[str, Any]]
-    _categories_store: "Store[dict[str, dict[str, Any]]]"
+    _categories_store: Store[dict[str, dict[str, Any]]]
     _subscriptions: dict[str, dict[str, Any]]
     _category_listeners: list[Callable[[], None]]
 
@@ -144,7 +145,7 @@ class CategoryMixin:
             "name": name,
             "icon": icon or "mdi:bell",
             "color": color,
-            "created_at": datetime.now(timezone.utc).isoformat(),
+            "created_at": datetime.now(UTC).isoformat(),
         }
         if default_mode:
             category["default_mode"] = default_mode
@@ -314,7 +315,7 @@ class CategoryMixin:
                 )
                 category["default_conditions"] = default_conditions
 
-        category["updated_at"] = datetime.now(timezone.utc).isoformat()
+        category["updated_at"] = datetime.now(UTC).isoformat()
 
         await self.async_save_categories()
         _LOGGER.info("Updated category: %s", category_id)
@@ -362,7 +363,7 @@ class CategoryMixin:
                 "name": CATEGORY_DEFAULT_NAME,
                 "icon": "mdi:bell",
                 "color": None,
-                "created_at": datetime.now(timezone.utc).isoformat(),
+                "created_at": datetime.now(UTC).isoformat(),
                 "is_default": True,
             }
             await self._categories_store.async_save(self._categories)

@@ -6,7 +6,6 @@ import logging
 from typing import Any
 
 import voluptuous as vol
-
 from homeassistant.components import websocket_api
 from homeassistant.core import HomeAssistant
 
@@ -20,13 +19,13 @@ from ..const import (
     VOLUME_OVERRIDE_MIN,
 )
 from .validation import (
+    MAX_CATEGORY_NAME_LENGTH,
     get_store,
     sanitize_for_storage,
     validate_category_id,
     validate_color,
     validate_icon,
     validate_navigate_to,
-    MAX_CATEGORY_NAME_LENGTH,
 )
 
 _LOGGER = logging.getLogger(__name__)

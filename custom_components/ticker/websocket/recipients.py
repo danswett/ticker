@@ -15,16 +15,15 @@ import logging
 from typing import Any
 
 import voluptuous as vol
-
 from homeassistant.components import websocket_api
 from homeassistant.core import HomeAssistant
 
 from ..const import (
     ATTR_USER_LINK,
+    DELIVERY_FORMAT_RICH,
     DEVICE_TYPE_PUSH,
     DEVICE_TYPE_TTS,
     DEVICE_TYPES,
-    DELIVERY_FORMAT_RICH,
     MAX_RECIPIENT_NAME_LENGTH,
     MODE_ALWAYS,
     MODE_CONDITIONAL,
@@ -43,9 +42,9 @@ from .recipient_validation import (
 )
 from .validation import (
     get_store,
+    sanitize_for_storage,
     validate_icon,
     validate_recipient_id,
-    sanitize_for_storage,
 )
 
 _LOGGER = logging.getLogger(__name__)

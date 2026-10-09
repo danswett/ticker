@@ -6,15 +6,15 @@ import logging
 from typing import TYPE_CHECKING, Any
 
 from ..const import (
-    MODE_ALWAYS,
-    MODE_NEVER,
-    MODE_CONDITIONAL,
     DEFAULT_CONDITION_ZONE,
+    DEVICE_MODE_ALL,
     LEGACY_MODE_ALWAYS,
     LEGACY_MODE_NEVER,
-    LEGACY_MODE_WHEN_IN_ZONE,
     LEGACY_MODE_ON_ARRIVAL,
-    DEVICE_MODE_ALL,
+    LEGACY_MODE_WHEN_IN_ZONE,
+    MODE_ALWAYS,
+    MODE_CONDITIONAL,
+    MODE_NEVER,
 )
 
 if TYPE_CHECKING:
@@ -35,7 +35,7 @@ class MigrationMixin:
     """
 
     # Type hints for mixin attributes (provided by main class)
-    hass: "HomeAssistant"
+    hass: HomeAssistant
     _subscriptions: dict[str, dict[str, Any]]
     _users: dict[str, dict[str, Any]]
 

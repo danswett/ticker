@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-
 from homeassistant.core import HomeAssistant
 
 from ..const import DOMAIN, MIGRATE_SOURCE_AUTOMATION
@@ -226,8 +225,8 @@ async def _apply_to_yaml_file(
 
     Creates a timestamped backup before modifying.
     """
-    from datetime import datetime
     import shutil
+    from datetime import datetime
 
     source_file = finding.get("source_file", "")
     if not source_file:

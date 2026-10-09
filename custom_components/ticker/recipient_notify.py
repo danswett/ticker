@@ -22,8 +22,8 @@ from .const import (
     ATTR_USER_LINK,
     DEFAULT_EXPIRATION_HOURS,
     DEFAULT_NAVIGATE_TO,
-    DELIVERY_FORMAT_PLAIN,
     DELIVERY_FORMAT_PERSISTENT,
+    DELIVERY_FORMAT_PLAIN,
     DELIVERY_FORMAT_RICH,
     DEVICE_TYPE_PUSH,
     DEVICE_TYPE_TTS,
@@ -83,7 +83,7 @@ def resolve_effective_subscription_pid(recipient: dict[str, Any]) -> str:
 
 async def async_send_to_recipient(
     hass: HomeAssistant,
-    store: "TickerStore",
+    store: TickerStore,
     recipient: dict[str, Any],
     category_id: str,
     title: str,
@@ -132,7 +132,7 @@ async def async_send_to_recipient(
 
 async def _async_send_push(
     hass: HomeAssistant,
-    store: "TickerStore",
+    store: TickerStore,
     recipient: dict[str, Any],
     category_id: str,
     title: str,
@@ -280,7 +280,7 @@ async def _async_send_push(
             )
             results["delivered"].append(service_id)
 
-        except asyncio.TimeoutError:
+        except TimeoutError:
             _LOGGER.error(
                 "Timeout sending to recipient %s via %s (exceeded %ds)",
                 recipient_id, service_id, NOTIFY_SERVICE_TIMEOUT,
@@ -320,7 +320,7 @@ async def _async_send_push(
 
 async def async_handle_conditional_recipient(
     hass: HomeAssistant,
-    store: "TickerStore",
+    store: TickerStore,
     recipient: dict[str, Any],
     category_id: str,
     title: str,
