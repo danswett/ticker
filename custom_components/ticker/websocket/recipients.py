@@ -71,7 +71,7 @@ def _build_subscription_map(
     vs by person).
     """
     subscription_map: dict[str, dict[str, Any]] = {}
-    for cat_id in categories:
+    for cat_id, category in categories.items():
         if cat_id in subs:
             sub = subs[cat_id]
             entry: dict[str, Any] = {
@@ -81,7 +81,6 @@ def _build_subscription_map(
                 entry["conditions"] = sub.get("conditions", {})
             subscription_map[cat_id] = entry
         else:
-            category = categories[cat_id]
             default_mode = category.get("default_mode", MODE_ALWAYS)
             entry = {"mode": default_mode}
             if (default_mode == MODE_CONDITIONAL
@@ -331,13 +330,14 @@ async def ws_update_recipient(
     # TTS fields
     if "media_player_entity_id" in msg:
         entity_id = msg["media_player_entity_id"]
-        if device_type == DEVICE_TYPE_TTS:
-            if not entity_id or not entity_id.startswith("media_player."):
-                connection.send_error(
-                    msg["id"], "invalid_media_player",
-                    "media_player_entity_id must start with 'media_player.'",
-                )
-                return
+        if device_type == DEVICE_TYPE_TTS and (
+            not entity_id or not entity_id.startswith("media_player.")
+        ):
+            connection.send_error(
+                msg["id"], "invalid_media_player",
+                "media_player_entity_id must start with 'media_player.'",
+            )
+            return
         kwargs["media_player_entity_id"] = entity_id
 
     if "tts_service" in msg:

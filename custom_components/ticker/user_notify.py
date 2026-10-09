@@ -453,7 +453,7 @@ async def async_send_notification(
                 image_url=image_url,
             )
             results["dropped"].append(f"{service_id}: {err}")
-        except Exception as err:
+        except Exception as err:  # noqa: BLE001 — one device failing must not stop the others
             _LOGGER.error(
                 "Unexpected error sending notification to %s via %s: %s",
                 person_id,

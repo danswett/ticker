@@ -49,7 +49,7 @@ class MigrationMixin:
         """
         migrated_count = 0
 
-        for key, sub in self._subscriptions.items():
+        for sub in self._subscriptions.values():
             old_mode = sub.get("mode", "")
 
             # Skip if already in v2 format (lowercase modes)
@@ -105,7 +105,7 @@ class MigrationMixin:
         """
         migrated_count = 0
 
-        for person_id, user in self._users.items():
+        for user in self._users.values():
             # Skip if already has device_preference
             if "device_preference" in user:
                 continue

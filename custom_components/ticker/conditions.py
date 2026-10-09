@@ -452,10 +452,7 @@ def has_any_conditions(conditions: dict[str, Any] | None) -> bool:
     if conditions.get("rules"):
         return True
 
-    if conditions.get("zones"):
-        return True
-
-    return False
+    return bool(conditions.get("zones"))
 
 
 def has_valid_rules(conditions: dict[str, Any] | None) -> bool:

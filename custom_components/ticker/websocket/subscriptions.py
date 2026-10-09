@@ -239,7 +239,7 @@ def _validate_conditions(
     zones = conditions.get("zones", {})
 
     # Validate legacy zones format
-    for zone_id in zones.keys():
+    for zone_id in zones:
         is_valid, error = validate_entity_id(zone_id, "zone")
         if not is_valid:
             return (msg_id, "invalid_zone", error)
@@ -277,8 +277,10 @@ def _validate_conditions(
             return (
                 msg_id,
                 "invalid_rule_actions",
-                "At least one of 'deliver_when_met' or "
-                "'queue_until_met' must be true",
+                (
+                    "At least one of 'deliver_when_met' or "
+                    "'queue_until_met' must be true"
+                ),
             )
 
     return None

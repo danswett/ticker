@@ -155,14 +155,17 @@ async def ws_create_category(
 
     # F-35: validate chime_media_content_id length
     chime_id = msg.get("chime_media_content_id")
-    if chime_id is not None and isinstance(chime_id, str):
-        if len(chime_id) > MAX_CHIME_MEDIA_CONTENT_ID_LENGTH:
-            connection.send_error(
-                msg["id"], "invalid_chime",
-                f"chime_media_content_id exceeds "
-                f"{MAX_CHIME_MEDIA_CONTENT_ID_LENGTH} characters",
-            )
-            return
+    if (
+        chime_id is not None
+        and isinstance(chime_id, str)
+        and len(chime_id) > MAX_CHIME_MEDIA_CONTENT_ID_LENGTH
+    ):
+        connection.send_error(
+            msg["id"], "invalid_chime",
+            f"chime_media_content_id exceeds "
+            f"{MAX_CHIME_MEDIA_CONTENT_ID_LENGTH} characters",
+        )
+        return
 
     # F-35.2: volume_override — pass through to store. Voluptuous already
     # validated the range; store enforces sparse storage.
@@ -307,36 +310,40 @@ async def ws_update_category(
     # None or "" clears the override; non-empty sets it. Length-validated here.
     chime_id_present = "chime_media_content_id" in msg
     chime_id = msg.get("chime_media_content_id") if chime_id_present else None
-    if chime_id_present and chime_id is not None and isinstance(chime_id, str):
-        if len(chime_id) > MAX_CHIME_MEDIA_CONTENT_ID_LENGTH:
-            connection.send_error(
-                msg["id"], "invalid_chime",
-                f"chime_media_content_id exceeds "
-                f"{MAX_CHIME_MEDIA_CONTENT_ID_LENGTH} characters",
-            )
-            return
+    if (
+        chime_id_present
+        and chime_id is not None
+        and isinstance(chime_id, str)
+        and len(chime_id) > MAX_CHIME_MEDIA_CONTENT_ID_LENGTH
+    ):
+        connection.send_error(
+            msg["id"], "invalid_chime",
+            f"chime_media_content_id exceeds "
+            f"{MAX_CHIME_MEDIA_CONTENT_ID_LENGTH} characters",
+        )
+        return
 
     # F-35.2: volume_override — present with None clears the key, present
     # with a numeric value sets it. Voluptuous already enforced range.
     volume_present = "volume_override" in msg
     volume_value = msg.get("volume_override") if volume_present else None
 
-    update_kwargs: dict[str, Any] = dict(
-        category_id=category_id,
-        name=name,
-        icon=icon,
-        color=color,
-        default_mode=default_mode,
-        default_conditions=default_conditions,
-        clear_defaults=clear_defaults,
-        critical=critical,
-        smart_notification=smart_notification,
-        clear_smart_notification=clear_smart_notification,
-        action_set_id=action_set_id,
-        navigate_to=navigate_to,
-        expose_in_sensor=expose_in_sensor,
-        android_channel=android_channel,
-    )
+    update_kwargs: dict[str, Any] = {
+        "category_id": category_id,
+        "name": name,
+        "icon": icon,
+        "color": color,
+        "default_mode": default_mode,
+        "default_conditions": default_conditions,
+        "clear_defaults": clear_defaults,
+        "critical": critical,
+        "smart_notification": smart_notification,
+        "clear_smart_notification": clear_smart_notification,
+        "action_set_id": action_set_id,
+        "navigate_to": navigate_to,
+        "expose_in_sensor": expose_in_sensor,
+        "android_channel": android_channel,
+    }
     if chime_id_present:
         # Pass empty string to explicitly clear; non-empty to set
         update_kwargs["chime_media_content_id"] = chime_id if chime_id else ""

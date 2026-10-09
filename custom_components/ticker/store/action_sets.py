@@ -42,7 +42,7 @@ class ActionSetMixin:
         for cb in self._action_set_listeners:
             try:
                 cb()
-            except Exception as err:
+            except Exception as err:  # noqa: BLE001 — one bad listener must not break the store
                 _LOGGER.error("Error in action set change callback: %s", err)
 
     def register_action_set_listener(self, callback: Callable[[], None]) -> None:

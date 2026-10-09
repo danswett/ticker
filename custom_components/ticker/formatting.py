@@ -367,9 +367,12 @@ def resolve_ios_platform(hass: HomeAssistant, service_id: str) -> bool:
 
     # Path 1: Direct entity lookup (modern notify entities)
     entity_entry = entity_reg.async_get(service_id)
-    if entity_entry and entity_entry.device_id:
-        if _check_device_ios(hass, device_reg, entity_entry.device_id):
-            return True
+    if (
+        entity_entry
+        and entity_entry.device_id
+        and _check_device_ios(hass, device_reg, entity_entry.device_id)
+    ):
+        return True
 
     # Path 2: Legacy mobile_app — match by slugified device_name
     svc_suffix = service_id.split(".", 1)[1]

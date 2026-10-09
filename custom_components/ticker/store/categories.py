@@ -32,9 +32,7 @@ def _has_active_smart_config(config: dict) -> bool:
         return True
     if config.get("sticky"):
         return True
-    if config.get("persistent"):
-        return True
-    return False
+    return bool(config.get("persistent"))
 
 
 class CategoryMixin:
@@ -66,7 +64,7 @@ class CategoryMixin:
         for callback in self._category_listeners:
             try:
                 callback()
-            except Exception as err:
+            except Exception as err:  # noqa: BLE001 — one bad listener must not break the store
                 _LOGGER.error("Error in category change callback: %s", err)
 
     def register_category_listener(self, callback: Callable[[], None]) -> None:

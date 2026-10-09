@@ -124,7 +124,7 @@ async def ws_get_available_notify_services(
                 excluded.add(svc)
 
     # Collect services already assigned to users
-    for _pid, user in store.get_users().items():
+    for user in store.get_users().values():
         for svc in user.get("notify_services_override") or []:
             if isinstance(svc, dict):
                 excluded.add(svc.get("service", ""))

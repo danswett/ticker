@@ -122,7 +122,7 @@ async def async_convert_notification(
                 await apply_to_script(hass, finding, new_action)
             result["applied"] = True
             _LOGGER.info("Converted %s to ticker.notify (category: %s)", finding["source_id"], category_name)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 — failure is reported in the result, not raised
             result["success"] = False
             result["error"] = str(e)
             _LOGGER.error("Failed to apply conversion: %s", e)
@@ -260,7 +260,8 @@ async def _apply_to_yaml_file(
     backup_dir.mkdir(exist_ok=True)
 
     # Create timestamped backup
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    # Local time is deliberate: this names a backup file for a human to read.
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")  # noqa: DTZ005
     backup_filename = f"{file_path.name}.{timestamp}"
     backup_path = backup_dir / backup_filename
 
